@@ -59,6 +59,21 @@
 \usepackage{booktabs}
 \usepackage{textcomp}
 
+%my packages
+\usepackage{pdflscape}
+\usepackage{csquotes}
+\usepackage{array}
+\usepackage{tcolorbox}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{multicol}
+\usepackage{amsmath}
+\usepackage{pdflscape}
+\usepackage{afterpage}
+\usepackage{graphicx}
+\usepackage{datetime}
+\usepackage{cite}
+
 % Some optional stuff you might like/need.
 \usepackage{microtype}        % Improved Tracking and Kerning
 % \usepackage[all]{hypcap}    % Fixes bug in hyperref caption linking
@@ -76,7 +91,7 @@
 % Paper metadata (use plain text, for PDF inclusion and later
 % re-using, if desired).  Use \emtpyauthor when submitting for review
 % so you remain anonymous.
-\def\plaintitle{SIGCHI Conference Proceedings Format}
+\def\plaintitle{Understanding Data for Implementing Privacy in Software Systems}
 \def\plainauthor{First Author, Second Author, Third Author,
   Fourth Author, Fifth Author, Sixth Author}
 \def\emptyauthor{}
@@ -153,13 +168,7 @@
 \maketitle
 
 \begin{abstract}
-  UPDATED---\today. This sample paper describes the formatting
-  requirements for SIGCHI conference proceedings, and offers
-  recommendations on writing for the worldwide SIGCHI
-  readership. Please review this document even if you have submitted
-  to SIGCHI conferences before, as some format details have changed
-  relative to previous years. Abstracts should be about 150 words and
-  are required.
+Modern software systems continue to collect user data in large scale for various economic and social benefits. However, collection and use of personal data in systems impose a privacy risk on users who interact with these systems. In order to implement privacy in software systems it is imperative that developers understand user concerns associated with the data. In this research, we investigate how understanding data that is used in software system designs could help developers to implement privacy when they design software systems. We conducted two studies with software developers to see how understanding data could help them to implement privacy when they design privacy in software systems. Our studies indicate that developers can better implement privacy when they collect, store and share data in system designs if they understand the data sensitivity, data visibility in the system and how relevant data is for the system. 
 \end{abstract}
 
 \category{H.5.m.}{Information Interfaces and Presentation
@@ -167,401 +176,300 @@
   \url{http://acm.org/about/class/1998/} for the full list of ACM
   classifiers. This section is required.}{}{}
 
-\keywords{\plainkeywords}
+\keywords{Privacy Engineering, Software Development, Software Engineering, Data Minimization}
 
-\section{Introduction}
+\section{Introduction} 
 
-This format is to be used for submissions that are published in the
-conference proceedings. We wish to give this volume a consistent,
-high-quality appearance. We therefore ask that authors follow some
-simple guidelines. You should format your paper exactly like this
-document. The easiest way to do this is to replace the content with
-your own material.  This document describes how to prepare your
-submissions using \LaTeX.
+Modern software systems such as Internet of Things, Social Networking Systems and smart home systems are extremely dependent on user data. These systems collect large amounts of our personal data such as our birthday, identification numbers, phone numbers and even the medicine we take, and our daily schedules \cite {new2013google, the2017the}. Collection and use of personal data in software systems have escalated due to the various social and economic benefits data could bring into systems. For example, collecting data from users' medical profiles could predict a patient's chances of being diagnosed with cancer based on his/her symptoms. Connecting this data against users' financial status one could predict the chances of the user opting for a health insurance. However, use of personal data of users within systems also impose a risk of losing one's private information \cite {european2016data}. This may lead to identity hack in the internet (posing as someone else to get access to a bank account or interact with others) and cause financial and reputation loss to users. Therefore, users are concerned about how system designers collect, store and share their data in the systems. For example, connecting data from different user profiles across platforms such as Facebook and WhatsApp raised concerns among users on the possibility of revealing information about them (such as their friend networks and messaging history) to outsiders which may not be observable if the data remained isolated in either platform \cite {zingales2017between}. Therefore, it is important for developers to understand and acknowledge these user concerns when they design software systems.
 
-\section{Page Size and Columns}
-On each page your material should fit within a rectangle of 7 $\times$
-9.15 inches (18 $\times$ 23.2 cm), centered on a US Letter page (8.5
-$\times$ 11 inches), beginning 0.85 inches (1.9 cm) from the top of
-the page, with a 0.3 inches (0.85 cm) space between two 3.35 inches
-(8.4 cm) columns. Right margins should be justified, not
-ragged. Please be sure your document and PDF are US letter and not A4.
+For developers to understand how and why users have these specific concerns about their data, they should understand the data they collect and use in system designs from a user perspective \cite {marr2015big, tene2012big}. For example, it is said that users are more concerned about disclosing data into software systems if the data is sensitive (such as their health data), and if they feel the required data is irrelevant for the system that requests data \cite {malheiros2013fairly, malhotra2004internet}. For example, if a social networking application request their banking details users are most likely to decline compared to disclosing their banking details to make an online payment. If developers could see and understand these differences, developers can design systems that are privacy conscious. Developers understanding data from a user perspective could significantly lower the costs and risks involved in storing and securing large amounts of data in software systems \cite {marr2015big, tene2012big, rubinstein2012big}. This is important because storage and sharing of personal data is a necessity than a choice with respect to modern software systems \cite {marr2015big, tene2012big}
 
-\section{Typeset Text}
-The styles contained in this document have been modified from the
-default styles to reflect ACM formatting conventions. For example,
-content paragraphs like this one are formatted using the Normal style.
+In this study we observe how understanding data could help software developers to implement privacy when they design software systems. In this research when we say understanding data, we focus on data sensitivity, data visibility in a system design, data relevance. These attributes have been identified as attributes that have a significant impact on users concerns towards their data, and the privacy risk associated with data when users interact with software systems. In terms of privacy we focus on how understanding these attributes of data could help developers to focus on privacy in data collection, storage and sharing when they design systems. We conduct two studies in this paper. First, through a survey we observe how understanding the above attributes of data could help developers to understand data. Here we observe if developers believe understanding these attributes of data could help them with embedding privacy into software systems. Then we develop a work-flow that guide developers to implement privacy in a system design through understanding data. We then conduct 3 workshops to observe how this work-flow could help developers to implement privacy when they design software systems.
 
-\LaTeX\ sometimes will create overfull lines that extend into columns.
-To attempt to combat this, the \texttt{.cls} file has a command,
-\texttt{{\textbackslash}sloppy}, that essentially asks \LaTeX\ to
-prefer underfull lines with extra whitespace.  For more details on
-this, and info on how to control it more finely, check out
-{\url{http://www.economics.utoronto.ca/osborne/latex/PMAKEUP.HTM}}.
-
-\subsection{Title and Authors}
-
-Your paper's title, authors and affiliations should run across the
-full width of the page in a single column 17.8 cm (7 in.) wide.  The
-title should be in Helvetica or Arial 18-point bold.  Authors' names
-should be in Times New Roman or Times Roman 12-point bold, and
-affiliations in 12-point regular.  
-
-See \texttt{{\textbackslash}author} section of this template for
-instructions on how to format the authors. For more than three
-authors, you may have to place some address information in a footnote,
-or in a named section at the end of your paper. Names may optionally
-be placed in a single centered row instead of at the top of each
-column. Leave one 10-point line of white space below the last line of
-affiliations.
-
-\subsection{Abstract and Keywords}
-
-Every submission should begin with an abstract of about 150 words,
-followed by a set of Author Keywords and ACM Classification
-Keywords. The abstract and keywords should be placed in the left
-column of the first page under the left half of the title. The
-abstract should be a concise statement of the problem, approach, and
-conclusions of the work described. It should clearly state the paper's
-contribution to the field of HCI\@.
-
-\subsection{Normal or Body Text}
-
-Please use a 10-point Times New Roman or Times Roman font or, if this
-is unavailable, another proportional font with serifs, as close as
-possible in appearance to Times Roman 10-point. Other than Helvetica
-or Arial headings, please use sans-serif or non-proportional fonts
-only for special purposes, such as source code text.
-
-\subsection{First Page Copyright Notice}
-This template include a sample ACM copyright notice at the bottom of
-page 1, column 1.  Upon acceptance, you will be provided with the
-appropriate copyright statement and unique DOI string for publication.
-Accepted papers will be distributed in the conference
-publications. They will also be placed in the ACM Digital Library,
-where they will remain accessible to thousands of researchers and
-practitioners worldwide. See
-\url{http://acm.org/publications/policies/copyright_policy} for the
-ACM's copyright and permissions policy.
-
-\subsection{Subsequent Pages}
-
-On pages beyond the first, start at the top of the page and continue
-in double-column format.  The two columns on the last page should be
-of equal length.
-
-\begin{figure}
-\centering
-  \includegraphics[width=0.9\columnwidth]{figures/sigchi-logo}
-  \caption{Insert a caption below each figure. Do not alter the
-    Caption style.  One-line captions should be centered; multi-line
-    should be justified. }~\label{fig:figure1}
-\end{figure}
-
-\subsection{References and Citations}
-
-Use a numbered list of references at the end of the article, ordered
-alphabetically by last name of first author, and referenced by numbers
-in
-brackets~\cite{acm_categories,ethics,Klemmer:2002:WSC:503376.503378}.
-Your references should be published materials accessible to the
-public. Internal technical reports may be cited only if they are
-easily accessible (i.e., you provide the address for obtaining the
-report within your citation) and may be obtained by any reader for a
-nominal fee. Proprietary information may not be cited. Private
-communications should be acknowledged in the main text, not referenced
-(e.g., ``[Borriello, personal communication]'').
-
-References should be in ACM citation format:
-\url{http://acm.org/publications/submissions/latex_style}. This
-includes citations to internet
-resources~\cite{acm_categories,cavender:writing,CHINOSAUR:venue,psy:gangnam}
-according to ACM format, although it is often appropriate to include
-URLs directly in the text, as above.
-
-
-% Use a numbered list of references at the end of the article, ordered
-% alphabetically by first author, and referenced by numbers in
-% brackets~\cite{ethics, Klemmer:2002:WSC:503376.503378,
-%   Mather:2000:MUT, Zellweger:2001:FAO:504216.504224}. For papers from
-% conference proceedings, include the title of the paper and an
-% abbreviated name of the conference (e.g., for Interact 2003
-% proceedings, use \textit{Proc. Interact 2003}). Do not include the
-% location of the conference or the exact date; do include the page
-% numbers if available. See the examples of citations at the end of this
-% document. Within this template file, use the \texttt{References} style
-% for the text of your citation.
-
-% Your references should be published materials accessible to the
-% public.  Internal technical reports may be cited only if they are
-% easily accessible (i.e., you provide the address for obtaining the
-% report within your citation) and may be obtained by any reader for a
-% nominal fee.  Proprietary information may not be cited. Private
-% communications should be acknowledged in the main text, not referenced
-% (e.g., ``[Robertson, personal communication]'').
-
-\begin{table}
-  \centering
-  \begin{tabular}{l r r r}
-    % \toprule
-    & & \multicolumn{2}{c}{\small{\textbf{Test Conditions}}} \\
-    \cmidrule(r){3-4}
-    {\small\textit{Name}}
-    & {\small \textit{First}}
-      & {\small \textit{Second}}
-    & {\small \textit{Final}} \\
-    \midrule
-    Marsden & 223.0 & 44 & 432,321 \\
-    Nass & 22.2 & 16 & 234,333 \\
-    Borriello & 22.9 & 11 & 93,123 \\
-    Karat & 34.9 & 2200 & 103,322 \\
-    % \bottomrule
-  \end{tabular}
-  \caption{Table captions should be placed below the table. We
-    recommend table lines be 1 point, 25\% black. Minimize use of
-    table grid lines.}~\label{tab:table1}
-\end{table}
-
-\section{Sections}
-
-The heading of a section should be in Helvetica or Arial 9-point bold,
-all in capitals. Sections should \textit{not} be numbered.
-
-\subsection{Subsections}
-
-Headings of subsections should be in Helvetica or Arial 9-point bold
-with initial letters capitalized.  For sub-sections and
-sub-subsections, a word like \emph{the} or \emph{of} is not
-capitalized unless it is the first word of the heading.
-
-\subsubsection{Sub-subsections}
-
-Headings for sub-subsections should be in Helvetica or Arial 9-point
-italic with initial letters capitalized.  Standard
-\texttt{{\textbackslash}section}, \texttt{{\textbackslash}subsection},
-and \texttt{{\textbackslash}subsubsection} commands will work fine in
-this template.
-
-\section{Figures/Captions}
-
-Place figures and tables at the top or bottom of the appropriate
-column or columns, on the same page as the relevant text (see
-Figure~\ref{fig:figure1}). A figure or table may extend across both
-columns to a maximum width of 17.78 cm (7 in.).
-
-\begin{figure*}
-  \centering
-  \includegraphics[width=1.75\columnwidth]{figures/map}
-  \caption{In this image, the map maximizes use of space. You can make
-    figures as wide as you need, up to a maximum of the full width of
-    both columns. Note that \LaTeX\ tends to render large figures on a
-    dedicated page. Image: \ccbynd~ayman on
-    Flickr.}~\label{fig:figure2}
-\end{figure*}
-
-Captions should be Times New Roman or Times Roman 9-point bold.  They
-should be numbered (e.g., ``Table~\ref{tab:table1}'' or
-``Figure~\ref{fig:figure1}''), centered and placed beneath the figure
-or table.  Please note that the words ``Figure'' and ``Table'' should
-be spelled out (e.g., ``Figure'' rather than ``Fig.'') wherever they
-occur. Figures, like Figure~\ref{fig:figure2}, may span columns and
-all figures should also include alt text for improved accessibility.
-Papers and notes may use color figures, which are included in the page
-limit; the figures must be usable when printed in black-and-white in
-the proceedings.
-
-The paper may be accompanied by a short video figure up to five
-minutes in length. However, the paper should stand on its own without
-the video figure, as the video may not be available to everyone who
-reads the paper.  
-
-\subsection{Inserting Images}
-When possible, include a vector formatted graphic (i.e. PDF or EPS).
-When including bitmaps,  use an image editing tool to resize the image
-at the appropriate printing resolution (usually 300 dpi).
-
-\section{Quotations}
-Quotations may be italicized when \textit{``placed inline''} (Anab,
-23F).
-
-\begin{quote}
-Longer quotes, when placed in their own paragraph, need not be
-italicized or in quotation marks when indented (Ramon, 39M).  
-\end{quote}
-
-\section{Language, Style, and Content}
-
-The written and spoken language of SIGCHI is English. Spelling and
-punctuation may use any dialect of English (e.g., British, Canadian,
-US, etc.) provided this is done consis- tently. Hyphenation is
-optional. To ensure suitability for an international audience, please
-pay attention to the following:
+Our main findings in this work are as follows :
 
 \begin{itemize}
-\item Write in a straightforward style.
-\item Try to avoid long or complex sentence structures.
-\item Briefly define or explain all technical terms that may be
-  unfamiliar to readers.
-\item Explain all acronyms the first time they are used in your
-  text---e.g., ``Digital Signal Processing (DSP)''.
-\item Explain local references (e.g., not everyone knows all city
-  names in a particular country).
-\item Explain ``insider'' comments. Ensure that your whole audience
-  understands any reference whose meaning you do not describe (e.g.,
-  do not assume that everyone has used a Macintosh or a particular
-  application).
-\item Explain colloquial language and puns. Understanding phrases like
-  ``red herring'' may require a local knowledge of English.  Humor and
-  irony are difficult to translate.
-\item Use unambiguous forms for culturally localized concepts, such as
-  times, dates, currencies, and numbers (e.g., ``1--5--97'' or
-  ``5/1/97'' may mean 5 January or 1 May, and ``seven o'clock'' may
-  mean 7:00 am or 19:00). For currencies, indicate equivalences:
-  ``Participants were paid {\fontfamily{txr}\selectfont \textwon}
-  25,000, or roughly US \$22.''
-\item Be careful with the use of gender-specific pronouns (he, she)
-  and other gendered words (chairman, manpower, man-months). Use
-  inclusive language that is gender-neutral (e.g., she or he, they,
-  s/he, chair, staff, staff-hours, person-years). See the
-  \textit{Guidelines for Bias-Free Writing} for further advice and
-  examples regarding gender and other personal
-  attributes~\cite{Schwartz:1995:GBF}. Be particularly aware of
-  considerations around writing about people with disabilities.
-\item If possible, use the full (extended) alphabetic character set
-  for names of persons, institutions, and places (e.g.,
-  Gr{\o}nb{\ae}k, Lafreni\'ere, S\'anchez, Nguy{\~{\^{e}}}n,
-  Universit{\"a}t, Wei{\ss}enbach, Z{\"u}llighoven, \r{A}rhus, etc.).
-  These characters are already included in most versions and variants
-  of Times, Helvetica, and Arial fonts.
+\item We show that 91\% developers in our studies believed understanding data would help them to implement better privacy when they design systems. Developers show that when they understood the data they use they could understand why and how to implement privacy in the system designs.
+\item We show that 85\% developers in our studies believed understanding data would help them to better decide on collecting, storing and sharing data in their systems. Developers easily decided to store and share data securely when they understood the privacy risk associated with the data.
+\end {itemize}
+
+This paper is structured as follows. We first discuss previous work on privacy to show why understanding data is important for implementing privacy in system designs. Then we discuss the background for understanding data which lead to selecting data sensitivity, relevance, visibility and granularity as the attributes of focus for understanding data. Next, we discuss the two user studies we conducted and the results to show how understanding data helps developers to implement privacy. In the discussion section we discuss the implications of our results and how our results could help the current approach towards privacy in software systems. Finally, we present our conclusions and future directions to continue this research.s
+
+\section {Related work}
+
+It can be seen that current research on privacy significantly focus on the implementation aspects of privacy (privacy techniques such as anonymization, aggregation and encryption for data protection). It is said that developers find it increasingly difficult to implement privacy in software systems due to lack of organizational support and systematic guidance. However, at the same time, it is worth understanding that implementing privacy in system designs is not as straightforward and simple as we would like it to be. For example, Pfitzmann et al. \cite {pfitzmann2010terminology} identifies Data Minimization with implementation techniques such as, unlinkability and un-observability that concern the processing of user data within systems. That is if a system cannot link data to a user, and if the existence of a user is not observable in a system from its data, even if the system collects users data the system has still effectively implemented Data Minimization. However, the way a developer implements these techniques in a system design is affected by many other aspects such as what data is collected in the system, what purpose is served by the system and how users would interact with the system. A recent study of software developers' attempts to practice Data Minimization in a system design activity showed that developers were inconsistent in the decisions they made to minimize the use of data in storage and sharing when designing the same system \cite {schiffner2018towards, senarath2018under}. It was seen that developers found  it difficult to implement privacy when they do not know the potential benefits data could bring into the system \cite {senarath2018under}. They did not know which data they needed in the system and which data they needed to protect.
+
+For example, previous research has defined that disclosure of a data item leads to loss of privacy, and confidentiality leads to privacy \cite {gurses2014can}. However, this may not be realistic in the context of modern software systems. Simply disclosing a data item in a system may not have an impact on the user's privacy if the system has appropriate privacy techniques (such as anonymization, aggregation and encryption) implemented in the system to protect data. Nevertheless, for the developer to implement \enquote{appropriate privacy techniques} for data in a system design, s/he needs to understand the data they use in the system. That is, when users interact with systems that collect their data, they perceive a privacy risk \cite {malheiros2013fairly}. For example, when installing a mobile app in his/her device the user is prompted to give permission to the app to access data from the device. Users' decisions to deny or allow these access notifications are based on the risk the they perceive in disclosing data to the app \cite {kobsa2007privacy, li2010understanding, malhotra2004internet}, and this risk is directly associated with the data being disclosed. However, this risk associated with the data is unknown to the developer. Developers rather design the application to collect, store and share data based on the application's business requirements, which may result in the app not catering for user privacy needs \cite {senarath2018under}. This leads to systems not catering for user privacy needs and data protection, which could result in privacy vulnerabilities in software systems. 
+
+In this research we focus on enabling developers to understand user data and understand this privacy risk associated with the data they use in systems. Our goal is to observe if understanding data would help developers to implement better privacy when they design software systems. 
+
+\section {Background} 
+
+Knowing the privacy risk associated with the data used in software systems could help developers to embed privacy into software systems \cite {senarath2018under}. Developers could implement measures to protect data that has a higher privacy risk, avoid using high risk data in systems and also communicate to the user why they collect and how they use high risk data so that users would know why the system collects their data. However, for this first we need to identify the attributes of data that contributes to this privacy risk associated with the data.
+
+Focusing on the intrinsic properties of the data being shared, Bansal et al. have shown that users' intention to disclose health information is affected by the sensitivity of the data \cite {bansal2010impact}. This intrigued our interest. Malhotra et al. \cite {malhotra2004internet} have also shown that consumer willingness to share personal data in commercial platforms is affected by the sensitivity of the data. Similarly, Malheiros et al. \cite {malheiros2013fairly} have shown that sensitivity of data items such as date of birth and occupation had a significant affect on the decisions of the users to disclose that data into software systems. These findings suggest that data sensitivity has an impact on the privacy risk associated with data.
+
+Consequently, Maximilien et al. \cite {maximilien2009privacy} have previously modeled the privacy risk of associated with data arguing that the the privacy risk of data increases monotonically with the sensitivity of data and visibility of data in a system. Using this relationship, Minkus and Memon \cite {minkus2014scale} have measured the privacy of users in Facebook by multiplying the sensitivity of their content with the visibility based on the user's privacy settings. Both these approaches measure the privacy risk of users when they interact with systems that are developed and functioning. Making use of this work Senarath and Arachchilage [HICSS paper] have introduced a model that measures the perceived privacy risk of users. Their model is developed to be used by software developers. They define three scales for data sensitivity, data visibility and the relavance of data to a software system. They have shown that if developers could rank and categorize data on these three scales and use the formula they propose, it would give the developers the perceived privacy risk by a users when they disclose the particular data item into the system. They argue that this model would be useful for developers and that it could be used in the software development process. The importance of developers understanding users' perceived privacy risks and embedding privacy into systems to alleviate this privacy risk is suggested by various research that focus on privacy aware software development. However, heretofore it has not been investigated if this would actually help developers to implement privacy when they design software systems.
+
+We believe that the initiative by Senarath and Arachchilage [HICSS paper] is a good entry point for integrating user aspects of privacy into the software development process. At the same time it is imperative to investigate if understanding data could help developers to implement privacy in software systems if they understand data following this model. This is the focus of this research.
+
+\section{Methodology}
+
+Our focus in this research is to observe how understanding data could help software developers to implement privacy when they design software systems. The following digram shows how we propose the understanding data step to fit in the existing system design process.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figures/understandingData.JPG}
+\caption{How the concept of understanding data would fit in the system design process, when deciding on data usage in a software system. Once the initial decision to collect data is made, before designing the system, developers should understand data. They can refine the data collection decisions and design the system to protect data and user privacy based on the understanding gained. }
+\end{center}
+\end{figure}
+
+As discussed, in terms of understanding data we focus on understanding the privacy risk associated with data from a user perspective. The model  proposed by Senarath and Arachchilage [HICSS paper to appear] defines data sensitivity, data visibility, data relevance and the as the parameters that affects the privacy risk of data. In order to use this model developers are required to determine 
+\begin{itemize}
+\item How sensitive data would be for a user (highly sensitive, moderately sensitive, low sensitive)
+\item How visible the data would be in the system (highly visible, moderately visible, low visible) and
+\item How relevant the data is to the system (highly relevant, moderately relevant, low relevant)
 \end{itemize}
 
-\section{Accessibility}
-The Executive Council of SIGCHI has committed to making SIGCHI
-conferences more inclusive for researchers, practitioners, and
-educators with disabilities. As a part of this goal, the all authors
-are asked to work on improving the accessibility of their
-submissions. Specifically, we encourage authors to carry out the
-following five steps:
-\begin{enumerate}
-\item Add alternative text to all figures
-\item Mark table headings
-\item Add tags to the PDF
-\item Verify the default language
-\item Set the tab order to ``Use Document Structure''
-\end{enumerate}
-For more information and links to instructions and resources, please
-see: \url{http://chi2016.acm.org/accessibility}.  The
-\texttt{{\textbackslash}hyperref} package allows you to create well tagged PDF files,
-please see the preamble of this template for an example.
+Therefore, the first experiment in this research was conducted to observe how developer perceive this ranking and scaling process, and if this helps them to understand data and implement privacy in a system design. 
 
-\section{Page Numbering, Headers and Footers}
-Your final submission should not contain footer or header information
-at the top or bottom of each page. Specifically, your final submission
-should not include page numbers. Initial submissions may include page
-numbers, but these must be removed for camera-ready. Page numbers will
-be added to the PDF when the proceedings are assembled.
+\section {Study I }
 
-\section{Producing and Testing PDF Files}
+We conducted this as a remote study because of the practical difficulties in recruiting developers with diverse backgrounds for a in lab experiment. Furthermore, we wanted the participants to participate at home or at work, which would make them behave closer to how they naturally work \cite {wermke2017security, acar2017comparing}. We recruited participants through personal connections and crowd-sourcing, by inviting Github users who are actively contributing to end user applications (Java and PHP) \cite {wermke2017security}. We first sent 6000 invitation email explaining the study and asked for expression of interest for participation, filtering Github users who had the highest number of commits in most popular Java and PhP repositories in October to December in 2016. The invitation requested voluntary participation. Once the participant expressed interest for participation, we emailed the study guide and the consent form via email. Participants were asked to sign and complete the consent form prior to participation. We received 118 expressions of interest within three weeks, out of which 25 agreed to participate in the study after receiving the study guide (~0.0042\% participant rate). After checking answer quality, we removed one participant's submission because the participant had contrasting answers. We thanked the expressions of interests we received after the three weeks period and kept their contact details for future studies.
 
-We recommend that you produce a PDF version of your submission well
-before the final deadline.  Your PDF file must be ACM DL
-Compliant. The requirements for an ACM Compliant PDF are available at:
-{\url{http://www.sheridanprinting.com/typedept/ACM-distilling-settings.htm}}.
+The experiment was designed based on an application scenario. We defined a healthcare application which would allow users to get medical advice through an software application (complete application scenario available in appendix). The experiment involved several steps as below. The experiment questions were hosted as a Google form. Participants were first asked to read and understand the application scenario used for the experiment. Then the participants were guided to follow the steps below.
 
-Test your PDF file by viewing or printing it with the same software we
-will use when we receive it, Adobe Acrobat Reader Version 10. This is
-widely available at no cost. Note that most
-reviewers will use a North American/European version of Acrobat
-reader, so please check your PDF accordingly.
+\begin{itemize}
+\item Developers were asked to decide the data they wanted to collect for the system:  This step made developers to decide on the data items they want to use in the system. This is the baseline data set with which developers worked in the next steps in the remainder of the experiment.
+\item Developers were asked to decide how they wanted to store and share data (draw the information flow diagram for the system on paper). Developers were asked to explicitly consider data privacy when they designed the system : This step allowed us to see how developers would approach data privacy when they were asked to.
+\item Developers were asked to scale and rank data according to data sensitivity, visibility and relevance for the system being designed : This step guided the developers through the model we are proposing. Similar to the work done by Senarath and Arachchilage, here we asked the developers to rank and scale data they decided to collect according to the the categorization in table 01. 
 
-When creating your PDF from Word, ensure that you generate a tagged
-PDF from improved accessibility. This can be done by using the Adobe
-PDF add-in, also called PDFMaker. Select Acrobat | Preferences from
-the ribbon and ensure that ``Enable Accessibility and Reflow with
-tagged Adobe PDF'' is selected. You can then generate a tagged PDF by
-selecting ``Create PDF'' from the Acrobat ribbon.
+\begin{center}
+\begin{table*}[htbp]
+\caption{Data Categorization}
+\begin{center}
+ \begin{tabular}{|m{2em}|m{14em}|m{14em}|m{14em}|} 
+ \hline
+\textbf{Scale} & \textbf{ Sensitivity} & \textbf{ Visibility} & \textbf{ Relatedness}\\
+\hline
+1 & Category S1 : Highly sensitive data elements, loss of data would impose serious damage to the privacy of the data owner &  Category V1 : Highly visible, similar to publicly posted content in Facebook, anyone can access without the knowledge of the data owner & Category R1 : Extremely related data the application cannot do without. For example, the location information for a tracking application\\
+\hline
+2 & Category S2 : Sensitive elements, loss would impose considerable damage to the privacy of the data owner & Category V2 : Relatively visible, similar to \textit{friends only} content in Faceboook, a limited set of users access the content without the knowledge of the data owner & Category R2 : Related data that provide features that add significant value to the application. For example, the location information for a restaurant finder\\
+\hline
+3 & Category S3 : Low sensitive elements, loss would impose limited, calculable and bearable damage to the privacy of the data owner & Category V3 : Not visible, similar to the \textit {only me} content in Facebook, no one can access the data without the knowledge of the data owner & Category R3 : Remotely related to the purpose and provide optional features in the application. For example, location information for a trip planner\\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+\end{center}
 
-\section{Conclusion}
 
-It is important that you write for the SIGCHI audience. Please read
-previous years' proceedings to understand the writing style and
-conventions that successful authors have used. It is particularly
-important that you state clearly what you have done, not merely what
-you plan to do, and explain how your work is different from previously
-published work, i.e., the unique contribution that your work makes to
-the field. Please consider what the reader will learn from your
-submission, and how they will find your work useful. If you write with
-these questions in mind, your work is more likely to be successful,
-both in being accepted into the conference, and in influencing the
-work of our field.
+\item Exit questionnaire to give feedback on the scaling and ranking process and answer questions (questionnaire available in the appendix) :  This step involved questions on how developers perceived the steps they followed, and how they think the scaling and ranking data would help them to understand data. The questions focused on how the understanding gained through the ranking and scaling process would help developers to implement data minimization in the system design. This was investigated through  Pfitzmann et al. \cite {pfitzmann2010terminology} and Gurses's \cite {gurses2015engineering} proposed methods to implement data minimization in systems. We asked developers if they would change their initial design and if they had a better idea to implement data minimization in the system design based on the understanding.
+\end{itemize}
 
-\section{Acknowledgments}
 
-Sample text: We thank all the volunteers, and all publications support
-and staff, who wrote and provided helpful comments on previous
-versions of this document. Authors 1, 2, and 3 gratefully acknowledge
-the grant from NSF (\#1234--2012--ABC). \textit{This whole paragraph is
-  just an example.}
+\subsection {Results}
 
-% Balancing columns in a ref list is a bit of a pain because you
-% either use a hack like flushend or balance, or manually insert
-% a column break.  http://www.tex.ac.uk/cgi-bin/texfaq2html?label=balance
-% multicols doesn't work because we're already in two-column mode,
-% and flushend isn't awesome, so I choose balance.  See this
-% for more info: http://cs.brown.edu/system/software/latex/doc/balance.pdf
-%
-% Note that in a perfect world balance wants to be in the first
-% column of the last page.
-%
-% If balance doesn't work for you, you can remove that and
-% hard-code a column break into the bbl file right before you
-% submit:
-%
-% http://stackoverflow.com/questions/2149854/how-to-manually-equalize-columns-
-% in-an-ieee-paper-if-using-bibtex
-%
-% Or, just remove \balance and give up on balancing the last page.
-%
-\balance{}
+Table 02 below shows how developers believed the ranking and scaling process they followed. 
 
-\section{References Format}
-Your references should be published materials accessible to the
-public. Internal technical reports may be cited only if they are
-easily accessible and may be obtained by any reader for a nominal
-fee. Proprietary information may not be cited. Private communications
-should be acknowledged in the main text, not referenced (e.g.,
-[Golovchinsky, personal communication]). References must be the same
-font size as other body text. References should be in alphabetical
-order by last name of first author. Use a numbered list of references
-at the end of the article, ordered alphabetically by last name of
-first author, and referenced by numbers in brackets. For papers from
-conference proceedings, include the title of the paper and the name of
-the conference. Do not include the location of the conference or the
-exact date; do include the page numbers if available. 
 
-References should be in ACM citation format:
-\url{http://www.acm.org/publications/submissions/latex_style}.  This
-includes citations to Internet
-resources~\cite{CHINOSAUR:venue,cavender:writing,psy:gangnam}
-according to ACM format, although it is often appropriate to include
-URLs directly in the text, as above. Example reference formatting for
-individual journal articles~\cite{ethics}, articles in conference
-proceedings~\cite{Klemmer:2002:WSC:503376.503378},
-books~\cite{Schwartz:1995:GBF}, theses~\cite{sutherland:sketchpad},
-book chapters~\cite{winner:politics}, an entire journal
-issue~\cite{kaye:puc},
-websites~\cite{acm_categories,cavender:writing},
-tweets~\cite{CHINOSAUR:venue}, patents~\cite{heilig:sensorama}, 
-games~\cite{supermetroid:snes}, and
-online videos~\cite{psy:gangnam} is given here.  See the examples of
-citations at the end of this document and in the accompanying
-\texttt{BibTeX} document. This formatting is a edited version of the
-format automatically generated by the ACM Digital Library
-(\url{http://dl.acm.org}) as ``ACM Ref.'' DOI and/or URL links are
-optional but encouraged as are full first names. Note that the
-Hyperlink style used throughout this document uses blue links;
-however, URLs in the references section may optionally appear in
-black.
+\begin{center}
+\begin{table*}[htbp]
+\caption{Study I - results}
+\begin{center}
+
+\begin{tabular}{|p{0.7\linewidth}|p{0.06\linewidth}|p{0.06\linewidth}|p{0.06\linewidth}|} 
+\hline
+\multirow{2}{*}{Question}& \multicolumn{3}{|c|}{Percentage Response}\\   \cline{2-4}
+&Yes&No&Maybe\\
+\hline
+Do you think that the categorization task gave you more understanding of the data you collected? & 91 & 9 & 0\\
+\hline
+After this categorization, do you think you could have further refined your data collection decisions? & 74 & 26 & 0 \\
+\hline
+After this categorization, do you think you have a better understanding on how you should access, save, change and share different data in your application? & 87 & 13 & 0 \\
+\hline
+After this categorization, do you get an understanding on how to perform privacy notifications and policies? & 83 & 17 & 0\\
+\hline
+After this categorization, do you get an understanding on testing the privacy aspects of this application? & 74 & 26 & 0\\
+\hline
+After this categorization, do you get an understanding on how to perform pseudonimization in this application? & 30 & 48 & 22\\
+\hline
+After this categorization, do you get an understanding on how to perform anonymization in this application? & 70 & 26 & 4\\
+\hline
+After this categorization, do you get an understanding on how to perform data aggregation and  separation in the database design in this application? & 65 & 26 & 9 \\
+\hline
+After this categorization, do you get an understanding on how to perform data encryption in this application? & 74 & 26 & 0 \\
+\hline
+After this categorization, do you get an understanding on how to implement unobservability and undetectability of data in this application? & 65 & 32 & 3 \\
+\hline
+\end{tabular}
+
+\end{center}
+\end{table*}
+\end{center}
+
+The main findings of this study are,
+
+\begin{itemize}
+\item 91\% of the developers in the study said that the data categorization they did have them more understanding of the data they used in the system. 
+\item 87\% of the developers in the study said that the data categorization helped them to decide how to access, save, change and share different data in the system design.
+\item 74\% of the developers in the study said that they could further refine their data collection decisions based on understanding they gained through the exercise.
+\end {itemize}
+
+Since developers had actually done a design for the system prior to answering these questions, the answers are contextualized. They had an understanding of the way they already designed the system. Following the exercise they were reflecting on the decisions they made rather than hypothesizing on a system design they never did. 
+
+These results gave us an idea about the way developers perceived the concept of understanding data we proposed. The results showed that developers were positive about the approach and they believed it could help them protect data in their system designs. However, the results did not show how the approach would perform when developers actually design systems. Therefore, in order to interpret the quantitative results we obtained in this study and to observe how developers would actually engage with the approach we propose.
+
+\section{study II}
+
+This experiment was designed as a qualitative experiment. In this experiment we needed to observe participants' engagement with the model, how they interact and react to the model in order to interpret the quantitative results we obtained through the survey. Therefore, we decided to conduct a participant observation workshop \cite {venable2016feds, gregor2013positioning}. 
+
+However, in order to conduct a workshop we needed to have a complete work-flow for the participants to follow. Therefore, based on the model proposed by Senarath and Arachchilage, we first defined a simple privacy engineering flow for understanding data. We call this work-flow as a \textit{Model for Understanding Data}.
+
+\section {Experiment Design : Model for Understanding Data}
+
+This model has the concept of understanding data and the perceived privacy risk associated with data in its core. The model defines steps for developers to follow.
+
+\begin{figure*}[h]
+\begin{center}
+\includegraphics[width=0.8\textwidth]{figures/dataItem_NEW}
+\caption{This is a flow diagram that demonstrates how the model works. First developers are required to determine data sensitivity (S), visibility (V), relatedness (R) and granularity (G). With sensitivity, visibility and relatedness calculate the perceived privacy risk. Based on all these parameters make the design decisions on using the data within the system.}
+\end{center}
+\end{figure*} 
+
+
+The model works as a privacy engineering methodology (PEM) and guides developers to implement privacy in a system as an engineering process. Previous studies have suggested that privacy engineering methods should be simple, explicit and straightforward. It is also suggested that Privacy engineering methods include privacy implementation techniques within the method, so that developers can relate the actions they need to execute once they follow the methodology. We followed these guidelines in implementing this PEM. In constructing this PEM we also followed the work flow for risk management in section 6 of the ISO/IEC 21005:2014 standard \cite {iso2014risk}. The ISO standards for risk management requires a risk management process to have risk identification, risk review and acceptance and finally risk treatment. In this PEM through understanding and evaluating data elements developers conduct risk identification. Then the design decisions based on the understanding address the risk review and acceptance requirements in the ISO standards. The actions executed in order to implement the design decisions handle the risk treatment phase.
+
+With this PEM in place, we conducted the second experiment to qualitatively observe developers engagement with the proposed PEM for understanding data and how understanding data could help them to implement privacy when they design software systems.
+
+\section{Study II}
+
+We designed this experiment based on the same application scenario as in Study I. We recruited participants with industrial software development experience (minimum of 1 year) through university notice boards. Nine participants expressed interest to participate. All participants were in the age range of 25 to 32. Four of the nine participants were female. We first divided the participants into three groups with 2,3 and 4 participants in each group. This was done to see if the number of participants had an effect on the way participants engaged with the model. Participants were asked to decide on a date that suits all members in the group and let us know. With this we allowed the participants to interact before they came for the workshop, so that they would not be complete strangers at the workshop. We conducted three separate workshops with the participants in the lab on the days they agreed on. All workshops were conducted in the same way. Upon arrival the experiment conductor (one of the authors) presented the application scenario. We used a paper template to guide the participants through the proposed PEM. Participants were expected to follow the paper template as a group, replicating how small software teams design systems. Participants were asked to go through the tasks one by one, discussing each step with the members and raising questions if required. The paper template had he following steps to guide the developers through the steps defined in the PEM.
+
+
+\begin{itemize}
+\item Decide the data items developers want to use if you were to design the system.
+\item Determine the granularity, sensitivity, visibility and relevance of the data they decided to collect for the system (table 01)
+\item Measure the perceived privacy risk for each data item (Using the formula proposed by Senarath and Arachchilage). They were provided with the formula.
+
+\[ \text{Perceived Privacy Risk} = 
+\frac{
+     \text{Sensitivity} \times \text{Visibility} ^ 3 }
+ {  2 \times \text{Relatedness }}
+\] [from Senarath and Arachchilage [HICCS paper]]
+
+\item Decide which data they want to store and share in the system.
+\item Decide which data they want to share with third parties (advertisers etc.) in the system and how they would share these data (focusing on privacy).
+\item Finally, an exit questionnaire to observe how developers perceived the utility of understanding data when implementing privacy into the systems they develop. We asked them 
+\begin{itemize}
+        \item Did the steps help you to understand the data you used in the system design?
+        \item Did understanding data help you to enhance the privacy you implemented in storing and sharing data in the system design?
+        \item Do you think organizations would approve using this PEM when they develop software systems?
+        \item Would you use and/or encourage using this PEM when designing privacy in software systems?
+\end{itemize}
+In addition to that we also wanted to evaluate the usefulness and the ease of use of the PEM we proposed for understanding data \cite {venkatesh2000theoretical, legris2003people}. We adopted these two parameters from TAM in order to evaluate the PEM  \cite {venkatesh2000theoretical}. Here we defined usefulness as the usefulness of the PEM in understanding data for implementing privacy in a system design, and ease of use as the general ease in executing the proposed model in order to minimize data in a system design. 
+\end{itemize}
+
+Participants were asked to fill out the exit questionnaire individually. One researcher was present in the workshop and made field notes on the observations made. Participants were encouraged to ask questions if needed to clarify the questions. However, since the paper template guided the participants, the interaction of the conductor was purposely kept minimum, to not to bias the participants.
+
+\subsection {data analysis}
+
+We averaged the ratings participants gave for the usefulness and the ease of use of the PEM in the exit questionnaire. However, since we had only 9 participants, we do not go to the extent of forming hypothesis and calculating correlations. Therefore, the analysis was more of a qualitative one. 
+
+We summarized the answers participants gave for the open ended questions in the exit questionnaire. These feedback was used to see how understanding data affected the developers approach in implementing privacy in the system they designed. and what their personal opinions were. The main source we used to observe participants' engagement with the model was the field notes of the experiment conductor. The conductor made notes following the actions of all participants in the group. We then summarized these notes and coded them to elicit common findings across the three groups. Total of two coders coded the field notes and the codes were separated into two sections to represent participant's feedback on the two phases in the model, namely the understanding data phase and the system decision making phase. The two coders had 7 and 12 codes respectively. The coders then discussed among themselves and came up with 5 final codes. we discuss these codes in detail in the results section.
+
+\section {Results}
+
+Fig. 03 shows the summary of the results we received for the usefulness and ease of use of the PEM.
+
+\begin{figure}[h]
+\begin{center}
+\includegraphics[width=0.5\textwidth]{figures/WorkShopTAM}
+\caption{Workshop Participant Feedback on Usefulness and the ease of use of the model}
+\end{center}
+\end{figure}
+
+In average developers rated the usefulness of the model at an average of 7/10 and the ease of using the model as 5.67/10. This suggests that the developers found the PEM useful for understanding data. For example, participants said \enquote{this is very useful}, \enquote{helps to understand important attributes of data}, \enquote{helps to chose and decide data security when designing systems}. When providing guidance for developers it is important that they find it useful. Previous research has revealed that when adopting a new methodology or process in their work environment, software developers main focus is on the usefulness of a methodology \cite {hardgrave2003investigating}. It is further revealed that developers are unlikely to use a method even if it is mandated in an organizational setting, unless they find it useful for them. Therefore, developers feedback saying the system is useful says that developers have a positive attitude towards the proposed PEM.
+
+Table 03 below captures some of the answers participants gave.
+
+\begin{center}
+\begin{table*}[htbp]
+\caption{Developers' Feedback }
+\begin{center}
+ \begin{tabular}{|m{10em}|m{36em}|} 
+ \hline
+\textbf{Participant} & \textbf{ Comment } \\
+\hline 
+ \multicolumn{2}{|c|}{\textbf{Using the PEM}}\\
+\hline
+Participant G, group II & \enquote{I see it is quite easy to follow these instructions, and follow the methodology}\\
+\hline
+Participant E, Group III &  \enquote {Tasks were simple and easy to complete}\\
+\hline
+Participant D, group II & \enquote {It was easy to use, less time consuming, but needs to be more fine tuned, I prefer doing this individually. Then I could have gotten a better idea}\\
+\hline
+Participant B, group I & \enquote{I would like to see some tasks, since I have never done something like this before}\\
+\hline
+\multicolumn{2}{|c|}{\textbf{Usefulness of the PEM}}\\
+\hline
+Participant A, group I &  \enquote{[The methodology] helps to identify key data}\\
+\hline
+Participant D, group II & \enquote{The methodology was useful to minimize the data in the system}\\
+\hline
+Participant A, group I & \enquote {This helps developers to choose what is important and decide what to put in a security policy which helps both the application and managing data}\\
+\hline
+Participant D, group II & \enquote{This is a quantification criteria, it helps to quantify and minimize data storage}\\
+\hline
+Participant E, group III & \enquote{An organization would like to boil things down to this level and exercise like this}\\
+\hline
+Participant F, group II & \enquote {In my opinion, this methodology mostly depends on our inputs and does not do not care much about the costs}\\
+\hline
+\end{tabular}
+\end{center}
+\end{table*}
+\end{center} 
+
+The PEM had a relatively low score for ease of use. When performing risk calculations participants preferred automated solutions to repetitive tasks. This was primarily due to the paper work involved in following the methodology. We gave the methodology description in a paper and asked the participants to conduct each step manually on paper. Developers in general prefer working on a computer than on pen and paper, and the participants suggested automation of several steps in the process, especially the steps that involved calculations and prioritization of the content based on the calculated scores. Participants requested for calculators while they executed the steps that involved calculations and one participant said \enquote{\textit {it is tedious to do the same calculation over and over again, especially when the numbers are the same}}. 
+
+\begin{itemize}
+\item 6/9 participants said that following the PEM helped them to understand data, while the other 2/9 said \textit{it may have helped, but not sure}. One participant said this alone as it is may not be sufficient, however, s/he said that it is very useful. 
+\item 3/9 participants said the understanding helped them to implement privacy in the system, 5/9 said that while the understanding helps, the mode stilll requires to be fine tuned and be improved to include the criteria for embedding privacy for it to be more useful, and one participant said this is not important as the final decision on privacy is usually taken by the organizational management.
+\item 4/9 participants said that organizations would like to use this in their system development activities. One participant said \textit{An organization would like to boil things down to this level}. One participant said No, because organizations do not care much about user privacy while 4 others said may be. Another participant said that the use of this PEM would depend on an organization's priorities and resources available for them.
+\item 6/9 participants said they would use this method if it is supported in the work environment since it is useful. One participant said s/he would like to use it but s/he doubt if the organization would find something like this important. Two participants said it is better to consider requirements from a functionality perspective rather than a user privacy perspective as it would complicate things in the design phase.
+\end{itemize}
+
+Next, we observed how we could interpret the main results we obtained in the survey. 
+
+\subsection{understanding data through categorizing data}
+
+In the survey 91\% of the participants said that they could understand data better through the data categorization process. By analyzing the field notes of the workshop, we identified two codes that explained participants engagement with data categorization. That is \textit{the PEM is useful in understanding data} and \textit{understanding these attributes is important in embedding privacy into a system design}. In the workshop we observed that participants had arguments within the group when they were categorizing data. Developers had to categorize data according to data sensitivity, data visibility and data relevance to the system they were designing. This process encouraged them to engage with the data withing the context of the system. For example, in order to determine how visible the data would be in the system, they had to determine how they would store the data in the system and how they would share the data with other systems. In order to determine the relevance of the data to the system, they had to think of the purpose of the system and define the goals of the system they were designing. Therefore, the process not only made them think of data, but also focus on the system they were designing. 
+
+It was observed that they sometimes changed the visibility of data elements in order to justify their collection decisions. In their feedback some participants suggested that having the same weights 1,2 and 3 for all attributes (sensitivity, visibility and relatedness) may not give the actual risk value for the data elements. They suggested a higher scale to be used for sensitivity. For example, 1 -3 for visibility and relatedness and 1,3,7  for sensitivity categories. One participant said \enquote{\textit {In my opinion, sensitivity should get a higher value as it is more important}}. This is an interesting suggestion we did not anticipate. 
+
+\subsection {collection, storing and sharing of data in the system design}
+
+Interestingly, we observed that participants did not change their initial decision for data collection after they did the risk calculations. This observation was different to the feedback we got in the survey where 74\% of the participants said that they could further refine their data collection decisions after understanding the data better. Perhaps when developers engage in group work, the environment created a more naturalistic environment in which developers were more concerned about the outcome rather than the process. Therefore, they decided the data to be collected through a thorough discussion at the first stage itself, due to which they did not want to change it along the process. This was the only reason we could hypothesis to explain this difference.
+
+However, participants changed their decisions on data storage and sharing based on the privacy risk they obtained from the model. They stated that this understanding was important and that the methodology encouraged them to look into the data from a user perspective. They also stated that the risk calculation of data and the engagement with data gave them more understanding about the privacy concerns users have and that they could relate their own concerns from a user perspective into the design decisions. 
+
+Following the privacy risk calculation all three groups decided to not store health related data in the system. One group decided to anonymize data and store everything in the cloud encrypted to ensure that data would be secured. One group decided to aggregate data for data sharing and not use individual data from users. Interestingly, participants easily understood the perceived privacy risk for data elements calculated in the model. The perceived privacy risk value in the model is a quantitative parameter. Previous research has shown that developers with IT background find it difficult to grasp qualitative measurements when they try to understand and integrate privacy guidelines into system designs \cite {senarath2018why, oetzel2014systematic}.This was not observed in the participants in our study, perhaps because the guidelines were based on numeric outputs from the model. Participants in one group readily decided that the privacy risk value for a data element should be 4 or less if they have are sharing that data element with third parties. They also suggested that in an industry environment they would prefer the involvement of the organizational management to make these decisions for them.
+
+\section {Discussion}
+
+The proposed PEM is to help software developers to understand data and exercise data minimization when they design software systems. This PEM could be applied in situations where a measurement of privacy is required for decisions making. For example, Personal Data Services (PDS) is a recent proposal for enabling user privacy in software systems. PDS defines a personal virtual vault to store user data, which is owned by the user \cite {rubinstein2012big, tene2012big}. The idea is to enable users to control their data and engage with the organizations to decide releasing their data based on benefits they can gain from a particular service. This approach focuses on empowering consumers, transparently communicating what their data could gain \cite {rubinstein2012big}. It is recognized as a potential approach to enable privacy and big data technologies to co-exist while adhering to the requirements of data protection regulations in the GDPR. The approach for understanding data proposed here complements this approach by enabling developers and users to observe the privacy risk of the data they disclose, retrieve when they engage in the decisions to trade data. For example, when releasing data users could rate their data according to sensitivity, and the controller who wants to access the data could give the rating for data visibility and relatedness. The privacy risk of data being available for both the data owner, who releases data and the data controller, who wants to access data and use data would strengthen the transparency in the process. Because without knowing the privacy risk of the data they are disclosing, users do not have all the information about the transaction to make an intelligent decision in disclosing their data.
+
+The workshop results suggest that the PEM works well with the way developers work when they design software systems. That is, developers were happy with the overall time the PEM took and they did not require assistance from the researcher in the workshop room. Therefore, the proposed PEM could be integrated into the software designing activities within organizational environments. Most privacy guidelines are criticized for being impractical and non realistic when it comes to the actual way developers design and develop software systems. For example, privacy by design is criticized for being theoretical and non practical in guiding developers to embed privacy into the systems they design. Data Minimization is criticized for being un-realistic with modern system design requirements to collect and use user data in large scale \cite {marr2015big}. Previous research has found out that developers find it difficult to adopt privacy guidelines that deviate significantly from the way they usually work and also that developer find it difficult to interpret soft decisions involved with privacy decision making \cite {ayalon2017developers}. For example \textit{avoid using unnecessary data, encrypt sensitive data} without a way for developers to measure which data is necessary and which data is sensitive confuses developers \cite {oetzel2014systematic}. In contrast we observed that developers understood the privacy risk value introduced and they found it easy to work with. Developers suggested that when using this approach their organization should define which is a good risk value for data for the system would be. Therefore, we can assume this PEM would be helpful for developers in their work environments. However, further experiments are needed to evaluate the acceptance of the PEM by developers.
+
+Finally, we also suggest that organizations should focus on educating and training developers to understand data when they design software systems. Our studies suggested that understanding data does help developers to implement privacy when they design systems. Developers demonstrated better privacy in their system designs in the workshop and most importantly they knew why they needed to implement privacy for high risk data. However, current development practices in organizations do not encourage developers to engage with the data they use in systems and the focus is mostly on the system requirements. In most cases, privacy is considered only if it is given in the requirement specification \cite {hadar2017privacy, senarath2018why}. However, if developers could understand the data they use, rather than following a requirement specification and blindly implementing privacy, they could effectively implement privacy in systems to reduce the privacy risks users may encounter in software systems \cite {marr2015big, tene2012big}. 
+
+\section {Conclusion}
+
+This work showed how understanding data and user aspects associated with data could be integrated into the software development processes. The proposed PEM was seen to have a positive impact on developers' efforts to embed privacy into the software system they design. We consider this as an initiative to implement workable practical work-flows to integrate user aspects into developers software development activities. This is important because data privacy is a highly contextual component that is heavily dependent on users, and developers' failure to identify user perceptions on privacy could result in systems that violate user privacy. We believe our research provides an initiative and an example to those who focus on integrating user aspects into the software development process in a way that could be executed with less effort and resources.
+
+
+
 
 % BALANCE COLUMNS
 \balance{}
